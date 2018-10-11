@@ -1,0 +1,113 @@
+﻿@model PizzExercise.ViewModel.ShoppingCartViewModel
+@{
+    ViewBag.Title = "Shopping Cart";
+}
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script type="text/javascript">
+    $(function () {
+        // Document.ready -> link up remove event handler
+        $(".RemoveLink").click(function () {
+            // Get the id from the link
+            var recordToDelete = $(this).attr("data-id");
+            if (recordToDelete != '') {
+                // Perform the ajax post
+                $.post("/Final/RemoveFromCart", { "id": recordToDelete },
+                    function (data) {
+                        // Successful requests get here
+                        // Update the page elements
+                        if (data.ItemCount == 0) {
+                            $('#row-' + data.DeleteId).fadeOut('slow');
+                        } else {
+                            $('#item-count-' + data.DeleteId).text(data.ItemCount);
+                        }
+                        $('.cart-total').text(data.CartTotal);
+                        $('#update-message').text(data.Message);
+                        $('#cart-status').text('Cart (' + data.CartCount + ')');
+                    });
+            }
+        });
+    });
+    function handleUpdate() {
+        // Load and deserialize the returned JSON data
+        var json = context.get_data();
+        var data = Sys.Serialization.JavaScriptSerializer.deserialize(json);
+        // Update the page elements
+        if (data.ItemCount == 0) {
+            $('#row-' + data.DeleteId).fadeOut('slow');
+        } else {
+            $('#item-count-' + data.DeleteId).text(data.ItemCount);
+        }
+        $('.cart-total').text(data.CartTotal);
+        $('#update-message').text(data.Message);
+        $('#cart-status').text('Cart (' + data.CartCount + ')');
+    }
+</script>
+<div>
+    <h3>Review your Pizza Details:</h3>
+</div>
+<div id="update-message"></div>
+
+<div class="container">
+    <table id="cart" class="table table-hover table-condensed">
+        <thead>
+            <tr>
+                <th style="width: 50%">Pizza</th>
+                <th style="width: 10%">Price</th>
+                <th style="width: 8%">Quantity</th>
+                <th style="width: 22%" class="text-center">Subtotal</th>
+                <th style="width: 10%"></th>
+            </tr>
+        </thead>
+        @foreach (var item in Model.CartItems)
+        {
+            <tbody>
+                <tr id="row-@item.RecordId">
+                    <td data-th="Product">
+                        <div class="row">
+                            <div class="col-sm-2 hidden-xs">
+                                <img src="/Content/Images/Whole-Pizza-100x100.jpg" alt="Pizza Image" class="img-responsive" />
+                            </div>
+                            <div class="col-sm-5">
+                                <h3 class="nomargin">Pizza</h3>
+                                <p><em>Pizza Size: </em> @item.Pizza.PizzaSize</p>
+                                <p><em>Ingredient choice 1: </em> @item.Pizza.Ingredient1Name</p>
+                                <p><em>Ingredient choice 2: </em> @item.Pizza.Ingredient2Name</p>
+                                <p><em>Ingredient choice 3: </em> @item.Pizza.Ingredient3Name</p>
+                            </div>
+                        </div>
+                    </td>
+                    <td data-th="Price">
+                        <div class="col-sm-5">
+                            <h3 class="nomargin">Cost</h3>
+                            <p>@item.Pizza.PizzaPrice</p>
+                            <p>@item.Pizza.Ingredient1Price</p>
+                            <p>@item.Pizza.Ingredient2Price</p>
+                            <p>@item.Pizza.Ingredient3Price</p>
+
+                        </div>
+                    </td>
+                    <td data-th="Quantity">
+                        <input id="item-count-@item.RecordId" type="number" class="form-control text-center" value="@item.Count">
+                    </td>
+                    <td data-th="Subtotal" class="text-center cart-total">@item.Pizza.Total</td>
+                    <td class="actions" data-th="">
+                        <button class="btn btn-danger btn-sm RemoveLink" data-id="@item.RecordId"><i class="fa fa-trash-o"></i></button>
+                    </td>
+                </tr>
+            </tbody>
+        }
+        <tfoot>
+            <tr class="visible-xs">
+                <td class="text-center cart-total"><strong>Total: @Model.CartTotal</strong></td>
+            </tr>
+            <tr>
+                <td><a href="@Url.Action("Create", "Design")" class="btn btn-warning"><i class="fa fa-angle-left"></i> Create Another Pizza</a></td>
+                <td><a href="@Url.Action("Login","Account", new {id = Model.CartId})" class="btn btn-danger">Cancel</a></td>
+                <td class="hidden-xs text-center cart-total"><strong>Total: @Model.CartTotal</strong></td>
+                <td><a href="@Url.Action("AddressAndPayment","Final", new {id = Model.CartId})" class="btn btn-success btn-block">Order<i class="fa fa-angle-right"></i></a></td>
+            </tr>
+        </tfoot>
+    </table>
+</div>
+
+

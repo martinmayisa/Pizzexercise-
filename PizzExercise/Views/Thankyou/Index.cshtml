@@ -1,0 +1,71 @@
+﻿@model PizzExercise.ViewModel.ThankYouViewModel
+@{
+    ViewBag.Title = "Checkout Complete";
+}
+
+<h2>Order Complete</h2>
+
+<p>Thank you for your order! Your order number is @Model.Order.OrderId</p>
+<p>Your payment method chosen is: @Model.Order.PaymentMethods</p>
+<p>You address: @Model.Users.Address</p>
+<p>Your area: @Model.Users.Area</p>
+<p>Delivery area: @Model.Area</p>
+
+<h2>Your delivery person:</h2>
+<p>Name: @Model.Delivery.Name</p>
+<img src="@Url.Content(Model.Delivery.Photo)" alt="Image" />
+
+<div>
+    <h3>Review your Pizza Details:</h3>
+</div>
+
+<div class="container">
+    <table id="cart" class="table table-hover table-condensed">
+        <thead>
+            <tr>
+                <th style="width: 50%">Pizza</th>
+                <th style="width: 10%">Price</th>
+                <th style="width: 22%" class="text-center">Subtotal</th>
+                <th style="width: 10%"></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td data-th="Product">
+                    <div class="row">
+                        <div class="col-sm-2 hidden-xs">
+                            <img src="/Content/Images/Whole-Pizza-100x100.jpg" alt="Pizza Image" class="img-responsive" />
+                        </div>
+                        <div class="col-sm-5">
+                            <h3 class="nomargin">Pizza</h3>
+                            <p><em>Pizza Size: </em> @Model.Pizza.PizzaSize</p>
+                            <p><em>Ingredient choice 1: </em> @Model.Pizza.Ingredient1Name</p>
+                            <p><em>Ingredient choice 2: </em> @Model.Pizza.Ingredient2Name</p>
+                            <p><em>Ingredient choice 3: </em> @Model.Pizza.Ingredient3Name</p>
+                        </div>
+                    </div>
+                </td>
+                <td data-th="Price">
+                    <div class="col-sm-5">
+                        <h3 class="nomargin">Cost</h3>
+                        <p>@Model.Pizza.PizzaPrice</p>
+                        <p>@Model.Pizza.Ingredient1Price</p>
+                        <p>@Model.Pizza.Ingredient2Price</p>
+                        <p>@Model.Pizza.Ingredient3Price</p>
+
+                    </div>
+                </td>
+                <td data-th="Subtotal" class="text-center cart-total">@Model.Pizza.Total</td>
+            </tr>
+        </tbody>
+        <tfoot>
+            <tr class="visible-xs">
+                <td class="text-center cart-total"><strong>Total: @Model.Pizza.Total</strong></td>
+            </tr>
+            <tr>
+                <td class="hidden-xs text-center cart-total"><strong>Total: @Model.Pizza.Total</strong></td>
+            </tr>
+        </tfoot>
+    </table>
+</div>
+

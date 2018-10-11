@@ -1,0 +1,32 @@
+﻿@model PizzExercise.ViewModel.FinalizeViewModel
+@{
+    ViewBag.Title = "Address and Payment";
+}
+
+<h1>Finalize your pizza order</h1>
+<div class="modal-body row">
+    <div class="col-md-12">
+        @using (Html.BeginForm())
+        {
+            <h2>Address and Payment</h2>
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.LabelFor(m => m.PaymentMethods, "Method of Payment", new { @class = "col-md-2 control-label" })
+                <div class="col-md-10">
+                    @Html.DropDownListFor(m => m.PaymentMethods, new SelectList(Model.PaymentMethods, "MethodOfPayment", "MethodOfPayment", "MethodOfPayment"), "Which method do you choose?", new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.PaymentMethods, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.Area, "Area", new { @class = "col-md-2 control-label" })
+                <div class="col-md-10">
+                    @Html.DropDownListFor(m => m.Area, new SelectList(Model.Area, "Area", "Area", "MethodOfPayment"), "Which method do you choose?", new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.Area, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <button type="submit" value="" class="btn btn-primary">Finalize</button>
+
+        }
+    </div>
+</div>

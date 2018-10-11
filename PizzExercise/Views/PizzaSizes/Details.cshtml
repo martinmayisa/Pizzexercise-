@@ -1,0 +1,34 @@
+﻿@model PizzExercise.Models.PizzaSize
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>PizzaSize</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.PizzaSizes)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PizzaSizes)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PizzaPrice)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PizzaPrice)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.PizzaId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

@@ -1,0 +1,91 @@
+﻿@model PizzExercise.ViewModel.DesignViewModel
+@{
+    ViewBag.Title = "Create";
+}
+
+@{
+    ViewBag.Title = "Design";
+}
+
+<h1>Create your very own pizza!</h1>
+<div class="modal-body row">
+    <div class="col-md-6">
+        @using (Html.BeginForm("Submit", "Design"))
+        {
+            <hr />
+            <br />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.LabelFor(m => m.PizzaSizes, "Pizza Size", new { @class = "col-md-3 control-label" })
+                <div class="col-md-9">
+                    @Html.DropDownListFor(m => m.PizzaSizes, new SelectList(Model.PizzaSizes, "PizzaSizes", "PizzaSizes", "PizzaPrice"), "Select a size", new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.PizzaSizes, "", new { @class = "text-danger" })
+                </div>
+
+            </div>
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <div class="form-group">
+                @Html.LabelFor(m => m.Ingredientses, "Ingredient 1", new { @class = "col-md-3 control-label" })
+                <div class="col-md-9">
+                    @Html.DropDownListFor(m => m.Ingredientses, new SelectList(Model.Ingredientses, "IngredientName", "IngredientName", "IngredientPrice"), "Select Ingredient 1", new { id = "ing1", Name = "Ingredient1", @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.Ingredientses, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <br />
+            <br />
+            <div class="form-group">
+                @Html.LabelFor(m => m.Ingredientses, "Ingredient 2", new { @class = "col-md-3 control-label" })
+                <div class="col-md-9">
+                    @Html.DropDownListFor(m => m.Ingredientses, new SelectList(Model.Ingredientses, "IngredientName", "IngredientName", "IngredientPrice"), "Select Ingredient 2", new { id = "ing2", Name = "Ingredient2", @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.Ingredientses, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <br />
+            <br />
+            <div class="form-group">
+                @Html.LabelFor(m => m.Ingredientses, "Ingredient 3", new { @class = "col-md-3 control-label" })
+                <div class="col-md-9">
+                    @Html.DropDownListFor(m => m.Ingredientses, new SelectList(Model.Ingredientses, "IngredientName", "IngredientName", "IngredientPrice"), "Select Ingredient 3", new { id = "ing3", Name = "Ingredient3", @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.Ingredientses, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <br />
+            <br />
+            <br />
+            <br />
+            <div class="row">
+                <div class="col-md-4"></div>
+                <div class="col-md-4"><button type="submit" value="" class="btn btn-primary">Submit</button></div>
+                <div class="col-md-4"></div>
+            </div>
+
+        }
+    </div>
+    <div class="col-md-6 text-left">
+        <div>
+            <h3><strong>Choose any of these @Model.PizzaSizes.Count() sizes</strong></h3>
+            <ul>
+                @foreach (var size in Model.PizzaSizes)
+                {
+                    <li><strong>@size.PizzaSizes - Price: @size.PizzaPrice</strong></li>
+                }
+            </ul>
+        </div>
+        <div>
+            <h3><strong>Select any 3 of these @Model.Ingredientses.Count() toppings:</strong></h3>
+            <ul>
+                @foreach (var item in Model.Ingredientses)
+                {
+                    <li><strong>@item.IngredientName - Price: @item.IngredientPrice</strong></li>
+                }
+            </ul>
+        </div>
+    </div>
+</div>
+
+
